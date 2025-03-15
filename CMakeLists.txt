@@ -11,12 +11,16 @@ PROJECT("${MODULE_NAME}")
 
 set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/cpp/src/BluetoothManager.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/cpp/src/device/Device.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/src/device/BluetoothDevice.cpp
 )
 
 set(HEADERS
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/structs.hpp
   ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/BluetoothManager.hpp
-  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/device/Device.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/interfaces/IBluetoothManager.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/interfaces/IBluetoothDevice.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/device/BluetoothDevice.hpp
+  ${CMAKE_CURRENT_LIST_DIR}/cpp/include/BluetoothManager/device/BluetoothDeviceBase.hpp
 )
 
 add_library("${MODULE_NAME}" SHARED ${HEADERS} ${SOURCES})
@@ -30,17 +34,16 @@ target_include_directories("${MODULE_NAME}"
 
 ### DEPENDENCIES
 
-# include(FetchContent)
-#
-# FetchContent_Declare(
-#         cpprealm
-#         GIT_REPOSITORY https://github.com/realm/realm-cpp.git
-#         GIT_TAG        v2.2.0
-# )
-#
-# FetchContent_MakeAvailable(cpprealm)
-#
-# target_link_libraries("${MODULE_NAME}" cpprealm)
+include(FetchContent)
+
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG        v1.15.0
+)
+
+FetchContent_MakeAvailable(spdlog)
+target_link_libraries("${MODULE_NAME}" spdlog)
 
 ###
 

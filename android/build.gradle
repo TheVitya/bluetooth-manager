@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 def safeExtGet(prop, fallback) {
   rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -31,7 +32,11 @@ android {
       path "../CMakeLists.txt"
     }
   }
+  kotlinOptions {
+    jvmTarget = '11'
+  }
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
 }
